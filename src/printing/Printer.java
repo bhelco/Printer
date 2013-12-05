@@ -3,7 +3,7 @@ package printing;
 public class Printer 
 {
     public boolean isOn;
-    public String modelNumber;
+    private String modelNumber;
     
     public Printer(boolean isOn, String modelNumber)
     {
@@ -11,16 +11,20 @@ public class Printer
         this.modelNumber = modelNumber;
     }
     
-    public void print()
+    public void print(int copies)
     {
-        String power = "off.";
-        if( this.isOn)
+
+        String powerStatus = "off.";
+        if(this.isOn)
         {
-            power = "on.";
+            powerStatus = "on.";
         }
-        
-        System.out.println("The printer: " + modelNumber + " is " + power);
-       
+
+        for(int i = 0; i < copies; i++)
+        {
+            System.out.println(i + 1 + ": The printer: " + modelNumber + " is " + powerStatus);
+        }
+
     }
     
     public void print(String text)
@@ -28,6 +32,10 @@ public class Printer
         System.out.println(text);
     }
     
+    public void setModelNumber(String mNum)
+    {
+        modelNumber = mNum;
+    }
     public String getModelNumber()
     {
         return modelNumber;
