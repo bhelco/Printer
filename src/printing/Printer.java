@@ -1,13 +1,14 @@
 package printing;
 
-public class Printer 
+public class Printer extends Machine
 {
-    public boolean isOn;
+
     private String modelNumber;
+    private PaperTray paperTray = new PaperTray();
     
     public Printer(boolean isOn, String modelNumber)
     {
-        this.isOn = isOn;
+        super(isOn);
         this.modelNumber = modelNumber;
     }
     
@@ -20,11 +21,33 @@ public class Printer
             powerStatus = "on.";
         }
 
-        for(int i = 0; i < copies; i++)
-        {
-            System.out.println(i + 1 + ": The printer: " + modelNumber + " is " + powerStatus);
-        }
+        int copiesCount = 1;
 
+        while(copies > 0 && paperTray.isEmptyPT() && this.isOn)
+        {
+            System.out.println(copiesCount + ": The printer: " + modelNumber + " is " + powerStatus);
+            copies --;
+            copiesCount ++;
+            paperTray.usePage();
+        }
+        
+        if( paperTray.isEmptyPT() && this.isOn)
+            System.out.println("paper tray is NOT empty");
+        else if(!paperTray.isEmptyPT() || !this.isOn)
+            System.out.println("paper is empty, or the printer is turned off");
+        System.out.println(paperTray.isEmptyPT());
+
+    }
+    
+    public void printColors()
+    {
+        String[] colors = new String[] { "Red", "Blue", "Green", "Yellow", "Orange" };
+        
+        for(String currentColor : colors)
+        {
+            System.out.println(currentColor);
+
+        }
     }
     
     public void print(String text)
@@ -39,5 +62,11 @@ public class Printer
     public String getModelNumber()
     {
         return modelNumber;
+    }
+
+    public void loadPaper(int count) 
+    {
+        paperTray.addPaper(count);
+        
     }
 }
