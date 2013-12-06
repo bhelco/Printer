@@ -1,6 +1,7 @@
 package greetings;
 
-import printing.IMachine;
+import printing.BWCartridge;
+import printing.ColorCartridge;
 import printing.Printer;
 
 
@@ -8,12 +9,15 @@ public class HelloWorld
 {
     public static void main(String[] args)
     {
-        IMachine myMachine = new Printer(true, "My Printer");
-        myMachine.TurnOn();
-        System.out.println(myMachine.isOn());
-//        IMachine myMachine1 = new IMachine(false);
-        myMachine.TurnOff();
-        System.out.println(myMachine.isOn());
+        Printer<ColorCartridge> printer = new Printer<ColorCartridge>(true, "My Printer", new ColorCartridge());
+        
+        //printer.printUsingCartridge(new ColorCartridge(), "hi");
+        printer.print(1);
+        Printer<BWCartridge> printer1 = new Printer<BWCartridge>(true, "My Printer", new BWCartridge());
+        printer1.loadPaper(10);
+        //printer.printUsingCartridge(new ColorCartridge(), "hi");
+        printer1.print(5);
+        printer1.print(6);
     }
 
 }
