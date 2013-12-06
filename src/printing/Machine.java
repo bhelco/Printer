@@ -1,19 +1,28 @@
 package printing;
 
-public class Machine 
+public class Machine implements IMachine
 {
     protected boolean isOn;
+
     public Machine(boolean isOn)
     {
         this.isOn = isOn;
     }
-    public void turnOn()
+    
+    public void TurnOn() 
     {
         isOn = true;
+        System.out.println("Machine is on.");    
+    }
+   
+    public void TurnOff() 
+    {
+        isOn = false;    
     }
     
-    public void turnOff()
+    @Override
+    public boolean isOn() 
     {
-        isOn = false;
+        return isOn;
     }
 }

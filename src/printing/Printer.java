@@ -1,29 +1,34 @@
 package printing;
 
-public class Printer extends Machine
+public class Printer implements IMachine
 {
 
     private String modelNumber;
     private PaperTray paperTray = new PaperTray();
+    private Machine machine;
+    
+
     
     public Printer(boolean isOn, String modelNumber)
     {
-        super(isOn);
+        machine = new Machine(isOn);
         this.modelNumber = modelNumber;
     }
+    
+
     
     public void print(int copies)
     {
 
         String powerStatus = "off.";
-        if(this.isOn)
+        if(isOn())
         {
             powerStatus = "on.";
         }
 
         int copiesCount = 1;
 
-        while(copies > 0 && paperTray.isEmptyPT() && this.isOn)
+        while(copies > 0 && paperTray.isEmptyPT() && machine.isOn)
         {
             System.out.println(copiesCount + ": The printer: " + modelNumber + " is " + powerStatus);
             copies --;
@@ -31,34 +36,19 @@ public class Printer extends Machine
             paperTray.usePage();
         }
         
-        if( paperTray.isEmptyPT() && this.isOn)
+        if( paperTray.isEmptyPT() && machine.isOn)
             System.out.println("paper tray is NOT empty");
-        else if(!paperTray.isEmptyPT() || !this.isOn)
+        else if(!paperTray.isEmptyPT() || !machine.isOn)
             System.out.println("paper is empty, or the printer is turned off");
         System.out.println(paperTray.isEmptyPT());
 
-    }
-    
-    public void printColors()
-    {
-        String[] colors = new String[] { "Red", "Blue", "Green", "Yellow", "Orange" };
-        
-        for(String currentColor : colors)
-        {
-            System.out.println(currentColor);
-
-        }
-    }
-    
-    public void print(String text)
-    {
-        System.out.println(text);
     }
     
     public void setModelNumber(String mNum)
     {
         modelNumber = mNum;
     }
+    
     public String getModelNumber()
     {
         return modelNumber;
@@ -66,7 +56,26 @@ public class Printer extends Machine
 
     public void loadPaper(int count) 
     {
-        paperTray.addPaper(count);
-        
+        paperTray.addPaper(count);    
+    }
+
+    @Override
+    public void TurnOn()
+    {
+        System.out.println("Warming up printer");
+        machine.TurnOn();
+    }
+    
+    @Override
+    public void TurnOff() 
+    {
+        machine.TurnOff();        
+    }
+
+
+
+    @Override
+    public boolean isOn() {
+        return machine.isOn();
     }
 }
