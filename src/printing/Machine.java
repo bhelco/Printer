@@ -17,7 +17,8 @@ public class Machine implements IMachine
    
     public void TurnOff() 
     {
-        isOn = false;    
+        isOn = false; 
+        System.out.println("Machine is off.");
     }
     
     @Override
